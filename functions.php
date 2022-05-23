@@ -26,10 +26,10 @@ function blossom_theme_setup() {
 		* If you're building a theme based on Blossom Theme, use a find and replace
 		* to change 'blossom-theme' to the name of your theme in all the template files.
 		*/
-	load_theme_textdomain( 'blossom-theme', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'blossom-theme', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+		add_theme_support( 'automatic-feed-links' );
 
 	/*
 		* Let WordPress manage the document title.
@@ -37,53 +37,53 @@ function blossom_theme_setup() {
 		* hard-coded <title> tag in the document head, and expect WordPress to
 		* provide it for us.
 		*/
-	add_theme_support( 'title-tag' );
+		add_theme_support( 'title-tag' );
 
 	/*
 		* Enable support for Post Thumbnails on posts and pages.
 		*
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
-	add_theme_support( 'post-thumbnails' );
+		add_theme_support( 'post-thumbnails' );
 
 	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus(
-		array(
-			'menu-1' => esc_html__( 'Primary', 'blossom-theme' ),
-		)
-	);
+		register_nav_menus(
+			array(
+				'menu-1' => esc_html__( 'Primary', 'blossom-theme' ),
+			)
+		);
 
 	/*
 		* Switch default core markup for search form, comment form, and comments
 		* to output valid HTML5.
 		*/
-	add_theme_support(
-		'html5',
-		array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-			'style',
-			'script',
-		)
-	);
+		add_theme_support(
+			'html5',
+			array(
+				'search-form',
+				'comment-form',
+				'comment-list',
+				'gallery',
+				'caption',
+				'style',
+				'script',
+			)
+		);
 
 	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'blossom_theme_custom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
+		add_theme_support(
+			'custom-background',
+			apply_filters(
+				'blossom_theme_custom_background_args',
+				array(
+					'default-color' => 'ffffff',
+					'default-image' => '',
+				)
 			)
-		)
-	);
+		);
 
 	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+		add_theme_support( 'customize-selective-refresh-widgets' );
 
 	/**
 	 * Add support for core custom logo.
@@ -138,7 +138,7 @@ add_action( 'widgets_init', 'blossom_theme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function blossom_theme_scripts() {
-	wp_enqueue_style( 'blossom-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
+	wp_enqueue_style( 'blossom-theme-style', get_stylesheet_uri().'?t='.time(), array(), _S_VERSION );
 	wp_style_add_data( 'blossom-theme-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'blossom-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
@@ -176,3 +176,72 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+
+function pre($arr,$title = "Untitled"){
+	echo "<h5 class='pre-title'>$title</h5>";
+	echo "<pre class='system'>";
+	print_r($arr);
+	echo "</pre>";
+}
+
+function isAdmin(){
+	$is = 0;
+	if(current_user_can('administrator') ) {
+		$is = 1;
+	}
+	return $is;
+}
+
+function isMod($course_id){
+	$is = 0;
+	if ($course_id == '') {
+		return $is;
+	}
+	if(current_user_can('administrator')) {
+		$is = 1;
+	}else{
+		$users = [];
+		$ins = get_field('course_instructor');
+		$mod = get_field('course_mod');
+		foreach ($ins as $key => $u) {
+			array_push($users, $u->data->ID);
+		}
+		foreach ($mod as $key => $u) {
+			array_push($users, $u->data->ID);
+		}
+		if (in_array(get_current_user_id(),$users)) {
+			$is = 1;
+		}
+	}
+	return $is;
+}
+
+function get_user_branch($parent_id,$uid = null){
+	if ($uid == null) {
+		$uid = get_current_user_id();
+	}
+	$parent_type = get_post_type($parent_id);
+	$branch_type = $parent_type.'-branch';
+	$av_type = ['code','lesson','exercise'];
+	if (in_array($parent_type,$av_type)) {
+		$args = array(
+			// 'post_parent' => $parent_id,
+			'meta_key'		=> 'parent',
+			'meta_value'	=> $parent_id,
+			'post_type' => $branch_type,
+			'post_author' => $uid,
+
+		);
+		$p = new WP_Query($args);
+		if ($p->post_count == 1) {
+			$b = $p->post;
+			return $b;
+		}else{
+			return null;
+		}
+	}else{
+		return null;
+	}
+	
+}
