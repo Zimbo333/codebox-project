@@ -70,7 +70,10 @@ $fi = get_the_post_thumbnail_url();
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@200;400;600&display=swap" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@6/fonts/Anuphan/Anuphan.css" rel="stylesheet" />
-
+	<link rel="stylesheet" type="text/css" href="<?=get_theme_file_uri()?>/theme.css?v=<?=time()?>">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap" rel="stylesheet">
 	<style type="text/css">
 	body{
 		font-family: 'Noto Sans Thai', sans-serif;
@@ -123,6 +126,7 @@ $fi = get_the_post_thumbnail_url();
 <body <?php body_class(); ?>>
 
 	<div id="coures_header" class="bg-slate-500  text-white" style="background-image: url('<?=$fi?>');">
+		<?php  masthead()?>
 		<div id="coures_header_inner">
 			<div class="image_subject">
 				<div class="name_subject justify-center py-16">

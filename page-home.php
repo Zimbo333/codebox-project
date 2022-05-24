@@ -2,11 +2,15 @@
 <html>
 <head>
 	<?php 
-wp_head();
-?>	
+	wp_head();
+
+// pre(wp_get_current_user())
+
+
+	?>	
 </head>
 <body>
-ss
+	ss
 </body>
 </html>
 

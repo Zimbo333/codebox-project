@@ -245,3 +245,65 @@ function get_user_branch($parent_id,$uid = null){
 	}
 	
 }
+
+function masthead(){
+	?>
+	<header id="masthead" class="site-header py-4">
+		<div class="container mx-auto">
+			<div class="nav-wrap">
+				<div class="nav-block nav-block-site noto">
+					<h5 class="font-bold text-xl">
+						<a href="<?=get_site_url()?>" class="">
+							<i class="fas fa-code"></i> &nbsp;<?=get_bloginfo() ?>
+						</a>
+					</h5>
+				</div>
+				<div class="nav-block nav-block-menu mono">
+					<?php 
+					wp_nav_menu();
+					?>
+				</div>
+				<div class="nav-block nav-block-user noto">
+					<?php 
+					$is_login = is_user_logged_in();
+					if ($is_login) {
+						$uid = get_current_user_id();
+						$u = get_user_by( 'ID', $uid );
+						$upic = get_avatar_url($uid, array("size"=>72));
+
+						?>
+						<div class="nav-profile-wrap">
+							<div class="nav-profile">
+								<div class="nav-profile-pic" style="background-image:url('<?=$upic?>')"></div>
+								<h5 class="nav-profile-name"><?=$u->display_name?></h5>
+							</div>
+							<div class="nav-toggle-wrap">
+								<div class="nav-toggle mono">
+									<a href="<?=get_author_posts_url($uid)?>" class="">
+										<h5>
+											My Profile
+										</h5>
+									</a> 
+									<a href="<?=wp_logout_url("https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]".'?t='.time())?>" class="">
+										<h5>
+											Logout 👋
+										</h5>
+									</a> 
+								</div>
+							</div>
+						</div>
+						
+						<?php
+					}else{
+						?>
+						<a class="sign-in" href="/?google_redirect&redirect_to=<?=urlencode("https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]".'?t='.time())?>&reauth=1" class="">Sign in &nbsp;<i class="fas fa-arrow-right text-xs"></i>
+						</a>
+						<?php
+					}
+					?>
+				</div>
+			</div>
+		</div>
+	</header><!-- #masthead -->
+	<?php
+}

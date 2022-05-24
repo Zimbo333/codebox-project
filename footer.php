@@ -11,9 +11,11 @@
 
 ?>
 
-	<footer id="colophon" class="site-footer">
-		Made with ❤ by xnanew © <?=date('Y')?> <a href="https://twitter.com/404notfound" class=""> xnanew.com</a>. All rights reserved.
-	</footer><!-- #colophon -->
+<footer id="colophon" class="site-footer text-white bg-slate-700  py-4 ">
+    <div class="mx-auto container text-center">
+      Made with ❤ by IT KMITL © <?=date('Y')?> <a href="https://it.kmitl.ac.th" class=""> IT KMITL</a>. All rights reserved.
+  </div>
+</footer><!-- #colophon -->
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

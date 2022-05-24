@@ -25,32 +25,28 @@ if ($is_login) {
 		$is_owner = true;
 	}
 }
-if ($_POST['cmd'] === 'clone') {
-	// สร้าง post
-	$postarr = array(
-		'post_type' => 'code',
-		'post_title' => 'Copy of '.get_the_title(),
-		'post_author' => $uid,
-		'post_status' => 'publish',
-	);
-	$new_code = wp_insert_post($postarr);
+// if ($_POST['cmd'] === 'clone') {
+// 	// สร้าง post
+// 	$postarr = array(
+// 		'post_type' => 'code',
+// 		'post_title' => 'Copy of '.get_the_title(),
+// 		'post_author' => $uid,
+// 		'post_status' => 'publish',
+// 	);
+// 	$new_code = wp_insert_post($postarr);
 
-	// แก้ slug
-	$update_slug = array(
-		'ID' => $new_code,
-		'post_name' => $new_code,
-	);
-	wp_update_post($update_slug);
-	//ใส่ value ใน custom filed
-	update_field('html',$_POST['code_area'],$new_code);
+// 	// แก้ slug
+// 	$update_slug = array(
+// 		'ID' => $new_code,
+// 		'post_name' => $new_code,
+// 	);
+// 	wp_update_post($update_slug);
+// 	//ใส่ value ใน custom filed
+// 	update_field('html',$_POST['code_area'],$new_code);
 	
 
-	header('Location: '.get_permalink($new_code));
-	die();
-}
-
-// if (isset($POST['new_branch'])) {
-
+// 	header('Location: '.get_permalink($new_code));
+// 	die();
 // }
 
 if (isset($_GET['preview'])) {
