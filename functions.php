@@ -231,14 +231,13 @@ function get_user_branch($parent_id,$uid = null){
 			'meta_value'	=> $parent_id,
 			'post_type' => $branch_type,
 			'post_author' => $uid,
+			'posts_per_page' => -1
 
 		);
 		$p = new WP_Query($args);
-		if ($p->post_count == 1) {
-			$b = $p->post;
+		if ($p->post_count) {
+			$b = $p->posts;
 			return $b;
-		}else{
-			return null;
 		}
 	}else{
 		return null;
@@ -296,7 +295,7 @@ function masthead(){
 						<?php
 					}else{
 						?>
-						<a class="sign-in" href="/?google_redirect&redirect_to=<?=urlencode("https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]".'?t='.time())?>&reauth=1" class="">Sign in &nbsp;<i class="fas fa-arrow-right text-xs"></i>
+						<a class="sign-in" href="/?google_redirect&redirect_to=<?=urlencode("https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]".'?t='.time())?>&reauth=1" class="">Login &nbsp;<i class="fas fa-arrow-right text-xs"></i>
 						</a>
 						<?php
 					}

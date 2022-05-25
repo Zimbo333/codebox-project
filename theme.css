@@ -192,3 +192,26 @@ ul#menu-main-menu li{
 .nav-profile-wrap:hover .nav-toggle-wrap {
 	display: block;
 }
+
+.single-course #masthead {
+    box-shadow: none;
+}
+
+.single-course .nav-block-site{
+	color: #fff;
+}
+
+.single-course .menu-item a{
+	color: #fff9;
+}
+.single-course .menu-item a:hover{
+	color: #fffe;
+}
+
+.single-course .nav-profile{
+	background-color: #fff;
+}
+
+.single-course .nav-profile-name::after{
+	    background: linear-gradient(-90deg, #fff, transparent);
+}

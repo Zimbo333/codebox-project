@@ -1025,7 +1025,3 @@ body.admin-bar #for_dev {
     font-size: 1rem;
     cursor: pointer;
 }
-
-body.single-code #editor_title{
-	color: #1bdbf2;
-}

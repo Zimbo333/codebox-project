@@ -117,6 +117,7 @@ $fi = get_the_post_thumbnail_url();
 	#coures_header{
 		background-size: cover;
 		background-position: center;
+		background-attachment: fixed;
 	}
 	#coures_header_inner{
 		/*backdrop-filter: blur(10px);*/
@@ -231,8 +232,10 @@ $fi = get_the_post_thumbnail_url();
 							foreach ($u['box'] as $bi => $b) {
 								$box_type = get_post_type($b->ID);
 								$cl = 'blue';
+								$branch_label = 'Branch';
 								if ($box_type == 'exercise'){
 									$cl = 'violet';
+									$branch_label = 'Assignment';
 								}
 								$cl_bdt = $cl;
 								$branch = get_user_branch($b->ID,$uid);
@@ -255,9 +258,9 @@ $fi = get_the_post_thumbnail_url();
 											<a href="<?=get_the_permalink($b->ID)?>" target="_blank">
 												<span class="rounded-md border-slate-200 px-3 py-2 text-sm mr-2 bg-<?=$cl?>-600 hover:bg-<?=$cl?>-700 border-2 border-<?=$cl?>-600 hover:border-<?=$cl?>-700  text-white">View Code</span>
 											</a>
-											<?php if ($branch != null): ?>
-												<a href="<?=get_the_permalink($branch->ID)?>" target="_blank">
-												<span  class="rounded-md border-2 border-<?=$cl?>-400 px-3 py-2 text-sm mr-2 hover:border-<?=$cl?>-700 text-<?=$cl?>-400 hover:text-<?=$cl?>-700">View Your Branch</span>
+											<?php if (sizeof($branch)>0): ?>
+												<a href="<?=get_the_permalink($branch[0]->ID)?>" target="_blank">
+												<span  class="rounded-md border-2 border-<?=$cl?>-400 px-3 py-2 text-sm mr-2 hover:border-<?=$cl?>-700 text-<?=$cl?>-400 hover:text-<?=$cl?>-700">View Your <?=$branch_label?></span>
 											</a>
 											<?php endif ?>
 										</div>
