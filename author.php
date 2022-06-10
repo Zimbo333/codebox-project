@@ -11,7 +11,16 @@ get_header();
 $author = get_user_by( 'slug', get_query_var( 'author_name' ) );
 $author_id = $author->ID;
 $author_pic = get_avatar_url($author_id, array("size"=>260));
-
+$args = array(
+	'post_type' => 'code',
+	'post_status' => 'publish',
+	'posts_per_page' => -1,
+					// 'posts_per_page' => 12,
+					// 'offset' => 0,
+	'author' => $author_id
+);
+$posts = new WP_Query( $args );
+$postsCount = $posts->post_count;
 ?>
 
 <main id="primary" class="site-main">
@@ -29,9 +38,9 @@ $author_pic = get_avatar_url($author_id, array("size"=>260));
 					<div class="author-bio-info">
 						<h1 class="noto text-4xl font-bold text-pink-500 mb-2"><?=$author->display_name?></h1>
 						
-						<h5 class="mono"><span class="icon-wrap"><i class="fas fa-keyboard"></i></span> 5 Boxes</h5>
+						<h5 class="mono"><span class="icon-wrap"><i class="fas fa-keyboard"></i></span> <?=$postsCount?> CodeBoxes</h5>
 						<h5 class="mono"><span class="icon-wrap"><i class="fas fa-code-branch"></i></span> 8 Branches</h5>
-						<h5 class="mono"><span class="icon-wrap"><i class="fas fa-graduation-cap"></i></span> 1 Enrolled Courses</h5>
+						<!-- <h5 class="mono"><span class="icon-wrap"><i class="fas fa-graduation-cap"></i></span> 1 Enrolled Courses</h5> -->
 					</div>
 				</div>
 			</div>
@@ -48,23 +57,13 @@ $author_pic = get_avatar_url($author_id, array("size"=>260));
 					Boxes
 				</h2>
 				<?php 
-				$args = array(
-					'post_type' => 'code',
-					'post_status' => 'publish',
-					'posts_per_page' => -1,
-					// 'posts_per_page' => 12,
-					// 'offset' => 0,
-					'author' => $author_id
-				);
-				$posts = new WP_Query( $args );
-				$postsCount = $posts->post_count;
 				if ($postsCount>0) {
 					echo '<div class="box-wrap">';
 					foreach ($posts->posts as $key => $b) {
 						// pre($b);
 						?>
 						<div class="box-item mb-2" id="box_<?=$b->ID?>">
-							<div class="bg-white rounded border-lime-400	border-2 mb-2">
+							<div class="bg-white rounded border-pink-400	border-2 mb-2">
 								<div class="box-iframe-wrap">
 									<iframe src="<?=get_permalink($b)?>/?preview" class="box-iframe" sandbox="allow-modals allow-pointer-lock allow-presentation allow-same-origin allow-scripts"></iframe>
 								</div>
@@ -72,7 +71,7 @@ $author_pic = get_avatar_url($author_id, array("size"=>260));
 							<h3>
 								<a href="<?=get_permalink($b)?>" class="font-bold text-slate-600 hover:text-slate-400"><?=$b->post_title?></a>
 							</h3>
-							<h4 class="text-lime-600 text-sm"><?=get_the_date( $d = 'j F Y - g:i A', $b )?></h4>
+							<h4 class="text-pink-600 text-sm"><?=get_the_date( $d = 'j F Y - g:i A', $b )?></h4>
 							
 						</div>
 						<?php
@@ -95,16 +94,6 @@ $author_pic = get_avatar_url($author_id, array("size"=>260));
 					Branches
 				</h2>
 				<?php 
-				$args = array(
-					'post_type' => 'code-branch',
-					'post_status' => 'publish',
-					'posts_per_page' => -1,
-					// 'posts_per_page' => 12,
-					// 'offset' => 0,
-					'author' => $author_id
-				);
-				$posts = new WP_Query( $args );
-				$postsCount = $posts->post_count;
 				if ($postsCount>0) {
 					echo '<div class="box-wrap">';
 					foreach ($posts->posts as $key => $b) {

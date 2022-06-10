@@ -635,7 +635,7 @@ select {
 
 textarea {
 	width: 100%;
-}*/
+	}*/
 
 /*--------------------------------------------------------------
 # Layouts
@@ -993,10 +993,10 @@ img.emoji {
 	display: block;
 }
 #for_dev pre.system {
-    background: #1d2327;
-    border: 1px solid #ffeb3bbb;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
+	background: #1d2327;
+	border: 1px solid #ffeb3bbb;
+	padding: 0.5rem 1rem;
+	margin-bottom: 1rem;
 }
 body.admin-bar #for_dev {
 	height: calc(100vh - 32px);
@@ -1004,24 +1004,33 @@ body.admin-bar #for_dev {
 }
 .pre-title {
 	color: #ffeb3b;
-    display: inline-block;
-    position: relative;
-    top: 0px;
-    background: #131517;
-    border: 1px solid #ffeb3bbb;
-    border-bottom: none;
-    font-weight: bold;
-    padding: 0.2em 1em;
+	display: inline-block;
+	position: relative;
+	top: 0px;
+	background: #131517;
+	border: 1px solid #ffeb3bbb;
+	border-bottom: none;
+	font-weight: bold;
+	padding: 0.2em 1em;
 }
 #for_dev_close {
-    width: 2rem;
-    line-height: 2rem;
-    background: #9f0000;
-    color: white;
-    position: absolute;
-    right: 0;
-    top: 0;
-    text-align: center;
-    font-size: 1rem;
-    cursor: pointer;
+	width: 2rem;
+	line-height: 2rem;
+	background: #9f0000;
+	color: white;
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-align: center;
+	font-size: 1rem;
+	cursor: pointer;
 }
+
+
+.archive-wrap {
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	grid-gap: 12px;
+	margin-top: 2em;
+}
+

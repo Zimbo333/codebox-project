@@ -36,7 +36,6 @@ if ($codeboxType == 'code-branch' OR $codeboxType == 'lesson-branch' OR $codebox
 }
 if ($codeboxType == 'lesson' OR $codeboxType == 'exercise' OR $codeboxType == 'lesson-branch' OR $codeboxType == 'exercise-branch') {
 	$is_mod = isMod($f['in_course']->ID);
-
 }
 if ($codeboxType == 'exercise' OR $codeboxType == 'exercise-branch') {
 	if ($codeboxType == 'exercise') {
@@ -44,6 +43,7 @@ if ($codeboxType == 'exercise' OR $codeboxType == 'exercise-branch') {
 	}else{
 		$duedate = get_field('due_date',$origin->ID);
 	}
+	
 }
 // pre($is_owner,'$is_owner');
 // pre($is_login,'$is_login');
@@ -75,9 +75,36 @@ if ($codeboxType == 'exercise' OR $codeboxType == 'exercise-branch') {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/xml/xml.min.js" integrity="sha512-UWfBe6aiZInvbBlm91IURVHHTwigTPtM3M4B73a8AykmxhDWq4EC/V2rgUNiLgmd/i0y0KWHolqmVQyJ35JsNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.tailwindcss.com"></script>
 
+	<!-- autocomplete css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/addon/hint/show-hint.min.css" integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- autocomplete js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/addon/hint/show-hint.min.js" integrity="sha512-Rx36KK4rJrsLJhzLBmhWGdQJKoog81hHm+0qBZD6IEF2+D+CqWiuiXhtAXoxJzucl4mx8zTYCGKX6zgq6+yLGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<!--  -->
-
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/lib/codemirror.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/lib/formatting.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/mode/xml/xml.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/mode/javascript/javascript.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/mode/css/css.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/mode/vbscript/vbscript.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/keymap/sublime.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/search/searchcursor.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/search/search.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/dialog/dialog.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/comment/comment.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/wrap/hardwrap.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/fold/foldcode.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/fold/brace-fold.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/edit/closetag.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/selection/active-line.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/hint/show-hint.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/hint/javascript-hint.js"></script>
+	<script src="https://codebox.jabont.com/wp-content/themes/seed-spring/codemirror/addon/hint/css-hint.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body <?php body_class(); ?>>
@@ -98,7 +125,9 @@ if ($codeboxType == 'exercise' OR $codeboxType == 'exercise-branch') {
 	body.single-exercise-branch{
 		--codetype-ci1: #ac60ff;
 	}
-	
+	.CodeMirror{
+		height: calc(100vh - 82px);
+	}
 	.codebox_editor{
 		display: grid;
 		height: 100vh;
@@ -272,7 +301,7 @@ body.admin-bar .codebox_editor{
 	color: #000;
 }
 .-ctr.-update {
-    color: #22d3ee;
+	color: #22d3ee;
 }
 .codebox_editor-footer-left .cmd-btn{
 	margin-right: 6px;
@@ -441,21 +470,21 @@ html { margin-top: 0px !important; }
 	display: none;
 }
 #readme_close {
-    background: #dc0f00;
-    width: 2em;
-    height: 2em;
-    top: 1em;
-    color: #fff;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    border-radius: 3px;
-    cursor: pointer;
-    position: fixed;
-    right: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	background: #dc0f00;
+	width: 2em;
+	height: 2em;
+	top: 1em;
+	color: #fff;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	border-radius: 3px;
+	cursor: pointer;
+	position: fixed;
+	right: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #readme_cont{
 	width: 100%;
@@ -471,15 +500,15 @@ html { margin-top: 0px !important; }
 	margin-bottom: .5em;
 }
 .readme_type {
-    background: var(--codetype-ci1);
-    color: #fff;
-    margin-top: 2em;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: inline-block;
-    padding: 0.2em 1em;
-    font-size: .8rem;
-    margin-bottom: 1em;
+	background: var(--codetype-ci1);
+	color: #fff;
+	margin-top: 2em;
+	text-transform: uppercase;
+	font-weight: bold;
+	display: inline-block;
+	padding: 0.2em 1em;
+	font-size: .8rem;
+	margin-bottom: 1em;
 }
 </style>
 <form method="post">
@@ -634,6 +663,34 @@ html { margin-top: 0px !important; }
 					หมดเขตส่ง <?=$duedate?>
 				</div>
 			<?php endif ?>
+			<?php if ($codeboxType == 'exercise-branch' AND $is_mod): ?>
+				<div class="cmd-btn -score mono" onclick="setScoreEditor()">
+					<i class="fas fa-score"></i> &nbsp;
+					<span id="score_editor"><?=get_field('score')?></span>/<?=get_field('score',$origin)?>
+				</div>
+				<script>
+					let theScore = `<?=get_field('score')?>`;
+					function setScoreEditor(){
+						const newScore = parseInt(prompt('ระบุคะแนน',theScore));
+						if (isNaN(newScore)) {
+							alert('คุณระบุคะแนนไม่ถูกต้อง')
+						}else{
+							let dataObject = {p_id:<?=$origin->ID?>,c_id:<?=$f['in_course']->ID?>,b_id:<?=get_the_ID()?>,score:newScore}
+							let formData = new FormData()
+
+							for (let key in dataObject) {
+								formData.append(key, dataObject[key])
+							}
+							axios.post('/add-score', formData)
+							.then(data =>{
+								console.log(data);
+								score_editor.innerText = newScore;
+								theScore = newScore;
+							})
+						}
+					}
+				</script>
+			<?php endif ?>
 
 		</div>
 		<div class="codebox_editor-footer-right">
@@ -725,14 +782,53 @@ html { margin-top: 0px !important; }
 	// init code page
 	let delay,mode
 	codeArea = document.getElementById('code_area')
-	let codeMirrorHtml = CodeMirror.fromTextArea(codeArea,
-	{
-		mode:"text/html",
+	let codeMirrorHtml = CodeMirror.fromTextArea(codeArea, {
+		mode: 'text/html',
 		lineNumbers: true,
-		theme:"monokai",
+		styleActiveLine: true,
+		selectionPointer: true,
+		// keyMap: "sublime",
+		autoCloseBrackets: true,
+		matchBrackets: true,
+		showCursorWhenSelecting: true,
+		tabSize: 3,
+		autoCloseTags: true,
 		lineWrapping:true,
-		value:"test"
+		extraKeys: {
+			"Ctrl-Space": "autocomplete",
+		},
+		theme:'monokai'
 	});
+
+	var arrows = [37, 38, 39, 40]
+
+	
+	codeMirrorHtml.on("keydown", function (cm, event) {
+		console.log(event.keyCode)
+		if (!(event.ctrlKey) &&
+			(event.keyCode >= 65 && event.keyCode <= 90) || 
+			(event.keyCode >= 97 && event.keyCode <= 122) || 
+			(event.keyCode >= 46 && event.keyCode <= 57)
+			) {CodeMirror.commands.autocomplete(cm, null, {completeSingle: false
+			});
+		}
+		if (event.keyCode === 69 && event.metaKey == true) {
+			autoFormatSelection()
+		}
+		if (event.keyCode === 83 && event.metaKey == true) {
+			event.preventDefault();
+			saveBox();
+			return false
+		}
+	});
+	function autoFormatSelection() {
+		var range = getSelectedRange();
+		codeMirrorHtml.autoFormatRange(range.from, range.to);
+	}
+	function getSelectedRange() {
+		return { from: codeMirrorHtml.getCursor(true), to: codeMirrorHtml.getCursor(false) };
+	}
+
 	codeMirrorHtml.on('change',function() {
 		if(checkMode() == 'live'){
 			clearTimeout(delay);
@@ -800,12 +896,14 @@ html { margin-top: 0px !important; }
 			if (data.data == '404') {
 				alert('ไม่พบ Box ที่ต้องการ');
 			}else{
-				console.log(data.data.success)
+				console.log(data.data)
 				if (data.data.success == 1) {
 					document.querySelector('.editor-alert.alert-saved').style.top = "32px";
 					setTimeout(()=>{
 						document.querySelector('.editor-alert.alert-saved').style.top = "-10px";
 					},2000)
+				}else if(data.data.success == 1473) {
+					alert('Exercise นี้ หมดเวลาในการส่งแล้ว');
 				}else{
 					alert('พบปัญหาในการเซฟ กรุณาลองใหม่อีกครั้ง');	
 				}

@@ -17,10 +17,30 @@
 	
 </head>
 <body <?php body_class(); ?>>
+	<?php 
+	$f = get_fields();
+	$parent_course_id = $f['parent_course'][0]->ID;
+	$parent_students = get_field('students',$parent_course_id);
+	$parent_units = get_field('units',$parent_course_id);
+	$act_num = 0;
+	$les_num = 0;
+	$exer_num = 0;
+	// pre($parent_units);
+	foreach ($parent_units as $key => $value) {
+		foreach ($value['box'] as $k => $v) {
+			$act_num++;	
+			if($v->post_type == 'lesson'){
+				$les_num++;
+			}else{
+				$exer_num++;
+			}
+		}
+	}
+	?>
 	<div class="mt-12 mx-auto flex justify-center">
 		<div class="dashboard">
 			<div class="flex justify-between items-center">
-				<p class="text-2xl font-bold">Multimedia Programming</p>
+				<p class="text-2xl font-bold"><?=get_the_title()?></p>
 				<button class="download-csv p-2 text-white text-xs">Download CSV</button>
 			</div>
 <!-- 			<div class="img_dashboard mt-4 flex justify-center items-center">
@@ -29,23 +49,23 @@
 			<div class="course_board mt-12 flex justify-between">
 				<div class="board_num flex flex-wrap justify-center py-16">
 					<div class="participants text-center text-white mr-4">
-						<p class="text-5xl pb-1 font-bold">280</p>
+						<p id="parti_size" class="text-5xl pb-1 font-bold"><?=sizeof($parent_students)?></p>
 						<p class="text-lg">Participants</p>
 					</div>
 					<div class="units text-center text-white mr-4">
-						<p class="text-5xl pb-1 font-bold">5</p>
+						<p id="unit_size" class="text-5xl pb-1 font-bold"><?=sizeof($parent_units)?></p>
 						<p class="text-lg">Units</p>
 					</div>
 					<div class="activities text-center text-white">
-						<p class="text-5xl pb-1 font-bold">15</p>
+						<p id="act_size" class="text-5xl pb-1 font-bold"><?=$act_num?></p>
 						<p class="text-lg">Activities</p>
 					</div>
 					<div class="lessons text-center text-white mr-4 mt-4">
-						<p class="text-5xl pb-1 font-bold">8</p>
+						<p id="les_size" class="text-5xl pb-1 font-bold"><?=$les_num?></p>
 						<p class="text-lg">Lessons</p>
 					</div>
 					<div class="exercises text-center text-white mt-4">
-						<p class="text-5xl pb-1 font-bold">7</p>
+						<p id="exer_size" class="text-5xl pb-1 font-bold"><?=$exer_num?></p>
 						<p class="text-lg">Exercises</p>
 					</div>
 				</div>
@@ -68,48 +88,67 @@
 					<p class="w-12">คะแนนสูงสุด</p>
 					<p class="w-12">คะแนนต่ำสุด</p>
 				</div>
-				<div class="flex justify-between mt-4 p-2">
-					<p class="w-20">Introduce yourself</p>
-					<p class="w-10 text-center">1</p>
-					<p class="w-12 text-center">200</p>
-					<p class="w-16 text-center">0</p>
-					<p class="w-20 text-center">100%</p>
-					<p class="w-14">195</p>
-					<p class="w-20">5</p>
-					<p class="w-12">10</p>
-					<p class="w-12">3</p>
-				</div>
+				<?php 
+				foreach ($parent_units as $key => $value) {
+					foreach ($value['box'] as $k => $v) {
+						if($v->post_type == 'exercise'){
+							?>
+							<div class="flex justify-between mt-4 p-2">
+								<p class="w-20"><?=$v->post_title?></p>
+								<p class="w-10 text-center"><?=$key+1?></p>
+								<p class="w-12 text-center">200</p>
+								<p class="w-16 text-center">0</p>
+								<p class="w-20 text-center">100%</p>
+								<p class="w-14">195</p>
+								<p class="w-20">5</p>
+								<p class="w-12">10</p>
+								<p class="w-12">3</p>
+							</div>
+							<?php
+						}
+					}
+				}
+				?>
 			</div>
-			<table class="table-auto">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Units</th>
-						<th>ส่งงาน</th>
-						<th>ไม่ส่งงาน</th>
-						<th>เปอร์เซนต์คนส่งงาน</th>
-						<th>ตรงเวลา</th>
-						<th>ไม่ตรงเวลา</th>
-						<th>คะแนนสูงสุด</th>
-						<th>คะแนนต่ำสุด</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Introduce yourself</td>
-						<td>1</td>
-						<td>200</td>
-						<td>0</td>
-						<td>100%</td>
-						<td>195</td>
-						<td>5</td>
-						<td>10</td>
-						<td>195</td>
-					</tr>
-				</tbody>
-			</table>
+			
+			<div class="exercise_board mt-4 p-4">
+				<p class="text-lg font-bold">Lesson</p>
+				<div class="head_exercise_board flex justify-between items-center mt-4">
+					<p class="w-30">Name</p>
+					<p class="w-10 text-center">Units</p>
+					<p class="w-12 text-center">ส่งงาน</p>
+					<p class="w-16 text-center">ไม่ส่งงาน</p>
+					<p class="w-20">เปอร์เซนต์คนส่งงาน</p>
+					<p class="w-14">ตรงเวลา</p>
+					<p class="w-20">ไม่ตรงเวลา</p>
+					<p class="w-12">คะแนนสูงสุด</p>
+					<p class="w-12">คะแนนต่ำสุด</p>
+				</div>
+				<?php 
+				foreach ($parent_units as $key => $value) {
+					foreach ($value['box'] as $k => $v) {
+						if($v->post_type == 'lesson'){
+							?>
+							<div class="flex justify-between mt-4 p-2">
+								<p class="w-20"><?=$v->post_title?></p>
+								<p class="w-10 text-center"><?=$key+1?></p>
+								<p class="w-12 text-center">200</p>
+								<p class="w-16 text-center">0</p>
+								<p class="w-20 text-center">100%</p>
+								<p class="w-14">195</p>
+								<p class="w-20">5</p>
+								<p class="w-12">10</p>
+								<p class="w-12">3</p>
+							</div>
+							<?php
+						}
+					}
+				}
+				?>
+			</div>
 		</div>
 	</div>
+	...
 
 	<script type="text/javascript">
 		let myChart = document.getElementById('myChart').getContext('2d');
@@ -117,6 +156,11 @@
 	// Chart.defaults.global.defaultFontFamily = 'Anuphan';
 	// Chart.defaults.global.defaultFontSize = 18;
 	// Chart.defaults.global.defaultFontColor = '#333';
+	let parti_size = parseInt(document.getElementById('parti_size').innerHTML)
+	let unit_size = parseInt(document.getElementById('unit_size').innerHTML)
+	let act_size = parseInt(document.getElementById('act_size').innerHTML)
+	let les_size = parseInt(document.getElementById('les_size').innerHTML)
+	let exer_size = parseInt(document.getElementById('exer_size').innerHTML)
 
 	let massPopChart = new Chart(myChart, {
 		type:'doughnut',
@@ -125,11 +169,11 @@
 			datasets:[{
 				label: 'Population',
 				data:[
-				280,
-				5,
-				15,
-				8,
-				7
+				parti_size,
+				unit_size,
+				act_size,
+				les_size,
+				exer_size
 				],
 				backgroundColor:[
 				'#28C7AA',
@@ -150,7 +194,7 @@
 
 <style>
 	body{
-		font-family: 'Anuphan', sans-serif; 
+		/*font-family: 'Anuphan', sans-serif; */
 		color: var(--color1);
 		background-color: #F6F4F9;
 	}

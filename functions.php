@@ -230,7 +230,31 @@ function get_user_branch($parent_id,$uid = null){
 			'meta_key'		=> 'parent',
 			'meta_value'	=> $parent_id,
 			'post_type' => $branch_type,
-			'post_author' => $uid,
+			'author' => $uid,
+			'posts_per_page' => -1
+
+		);
+		$p = new WP_Query($args);
+		if ($p->post_count) {
+			$b = $p->posts;
+			return $b;
+		}
+	}else{
+		return null;
+	}
+	
+}
+
+function get_all_branches($parent_id){
+	$parent_type = get_post_type($parent_id);
+	$branch_type = $parent_type.'-branch';
+	$av_type = ['code','lesson','exercise'];
+	if (in_array($parent_type,$av_type)) {
+		$args = array(
+			// 'post_parent' => $parent_id,
+			'meta_key'		=> 'parent',
+			'meta_value'	=> $parent_id,
+			'post_type' => $branch_type,
 			'posts_per_page' => -1
 
 		);
